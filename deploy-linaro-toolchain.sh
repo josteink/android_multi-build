@@ -31,4 +31,6 @@ tar xjf $LINARO_ARCHIVE || exit 1
 # invoke -register and -unregister on pre-build and post-build steps
 # of linaro builds. if so, also make clean.
 
+# TODO: merge with envsetup. remove patched envsetup on post-build for complete cleanup.
+
 echo "Done."
