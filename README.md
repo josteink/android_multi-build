@@ -33,7 +33,7 @@ builds.
 
 2. Clone repo.
 
-    git clone https://github.com/josteink/android_multi-build
+    $ git clone https://github.com/josteink/android_multi-build
 
 3. Do a local branch to store your configs/customizations.
 
@@ -41,11 +41,13 @@ builds.
 
 4. Customize builds in `run_all_builds.sh`. Instructions and examples can be found in the file itself.
 
-5. Execute build.
+5. Customize target server in `data/server.cfg`.
+
+6. Execute build.
 
     $ ./run_all_builds.sh
 
-6. Wait for builds to finish.
+7. Wait for builds to finish.
 
 ## Update
 
