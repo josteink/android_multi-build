@@ -1,0 +1,5 @@
+145c145,146
+<         arm) toolchaindir=arm/arm-linux-androideabi-4.6/bin
+---
+> #        arm) toolchaindir=arm/arm-linux-androideabi-4.6/bin
+>         arm) toolchaindir=arm/android-toolchain-eabi/bin
