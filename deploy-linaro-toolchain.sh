@@ -19,8 +19,16 @@ if [ ! -f "$LINARO_ARCHIVE" ] ; then
    wget -O $LINARO_ARCHIVE $SOURCE_URL || exit 1
 fi
 
+# TODO: pre-extract toolchain and just symlink it into target. will be MUCH faster.
+
 echo "Extracting Linaro toolchain..."
 cd prebuilts/gcc/linux-x86/arm/ || exit 1
 tar xjf $LINARO_ARCHIVE || exit 1
+
+# TODO: allow register/unregister to clean up on a *per-build basis*.
+# only do a "make clean" when doing changes to configuration.
+
+# invoke -register and -unregister on pre-build and post-build steps
+# of linaro builds. if so, also make clean.
 
 echo "Done."
