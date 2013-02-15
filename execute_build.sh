@@ -29,7 +29,8 @@ export USE_CCACHE=1
 croot
 brunch $DEVICE || exit 1
 
-# ensure we are getting a build created NOW.
+# ensure we are getting a build created NOW, and not some older build
+# created on an earlier date.
 DATEVAR=`date +%Y%m%d`
 LATEST=`find $OUT -type f -name cm-10*$DATEVAR*.zip | sort | tail -n 1` || exit 1
 LATEST_MD5=$LATEST.md5sum
@@ -38,6 +39,7 @@ if [ "$BUILD_TYPE" == "linaro" ] ; then
     LATEST_LINARO=`echo $LATEST | perl -pe "s/(-linaro)*\.zip/-linaro.zip/"`
     LATEST_LINARO_MD5=$LATEST_LINARO.md5sum
     mv "$LATEST" "$LATEST_LINARO" || exit 1
+    # TODO: regenerate MD5 file because the filename inside it needs to be updated.
     mv "$LATEST_MD5" "$LATEST_LINARO_MD5" || exit 1
     LATEST=$LATEST_LINARO
     LATEST_MD5=$LATEST_LINARO_MD5
