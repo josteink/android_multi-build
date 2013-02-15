@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # script-folder, without trailing /
 BUILDER_BASE="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
