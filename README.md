@@ -32,4 +32,4 @@ future:
 - Email reports
 - Forum posting
 
-Contributions welcome.
+*Contributions welcome.*
