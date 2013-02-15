@@ -10,7 +10,7 @@ builds.
 - Near zero learning-curve.
 - Build system 100% external to source-trees being built.
 - Automatic deployment of builds to hosting provider (FTP only for now).
-- Automatic (and optional) Linaro toolchain support.
+- Automatic (and optional) [Linaro](http://www.linaro.org/) toolchain support.
 - Ability to non-destructively inject Linaro toolchain seamlessly into
   existing source-trees.
 - Simple (very simple), declarative build format.
