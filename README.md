@@ -7,6 +7,7 @@ builds.
 
 ## Features
 
+- Near zero learning-curve.
 - Build system 100% external to source-trees being built.
 - Automatic deployment of builds to hosting provider (FTP only for now).
 - Automatic (and optional) Linaro toolchain support.
