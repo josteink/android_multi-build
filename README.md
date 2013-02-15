@@ -19,7 +19,7 @@ builds.
 
 - You already have one or several Android source-trees and you
   [know how to build them](http://source.android.com/source/).
-- Existing trees are pre-primed, have vendor-binaries, etc and ready to build.
+- Existing trees are pre-primed, have vendor-binaries, etc and are ready to build.
 - Tree is a [CyanogenMod](https://github.com/CyanogenMod/) or similar AOSP-based
   tree which can be built with the normal Android build procedures.
 - One tree is used for one device only. While re-using the same tree for multiple
