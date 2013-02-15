@@ -4,15 +4,12 @@
 BUILDER_BASE="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 PREBUILT=$BUILDER_BASE/prebuilt
 
-# based on http://forum.xda-developers.com/showthread.php?t=1988315
-# TODO: detect latest automatically?
-SOURCE_URL="http://releases.linaro.org/12.11/components/android/toolchain/4.7/android-toolchain-eabi-linaro-4.7-2012.11-1-2012-11-16_21-55-58-linux-x86.tar.bz2"
-
-# TODO: detect automatically from URL
-LINARO_ARCHIVE=$PREBUILT/android-toolchain-eabi-linaro-4.7-2012.11-1-2012-11-16_21-55-58-linux-x86.tar.bz2
-
 # ensure we have the folder right.
 mkdir -p $PREBUILT || exit 1
+
+# ensure we have toolchain
+SOURCE_URL="http://releases.linaro.org/13.01/components/android/toolchain/4.7/android-toolchain-eabi-linaro-4.7-2013.01-1-2013-01-17_01-27-05-linux-x86.tar.bz2"
+LINARO_ARCHIVE=$PREBUILT/`basename $SOURCE_URL`
 
 if [ ! -f "$LINARO_ARCHIVE" ] ; then
    echo "Fetching toolchain..."
@@ -31,6 +28,6 @@ tar xjf $LINARO_ARCHIVE || exit 1
 # invoke -register and -unregister on pre-build and post-build steps
 # of linaro builds. if so, also make clean.
 
-# TODO: merge with envsetup. remove patched envsetup on post-build for complete cleanup.
+# TODO: when above is done: merge with envsetup. remove patched envsetup on post-build for complete cleanup.
 
 echo "Done."
