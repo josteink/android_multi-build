@@ -26,6 +26,17 @@ builds.
   devices might work today, it will surely break a future implementation of
   changelog-generation.
 
+## Usage
+
+1. Clone repo.
+2. Prepare source-trees.
+3. Customize builds in `run_all_builds.sh`. Instructions and examples can be found in the file itself.
+4. Execute build.
+
+    ./run_all_builds.sh
+
+5. Wait for builds to finish.
+
 ## Ambitions / Todo:
 
 Not making any promises, but these are things I might want to do in the
