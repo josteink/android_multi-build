@@ -57,7 +57,7 @@ do
     $BUILDER_BASE/execute_build.sh $DEVICE $BUILD_TYPE $DEPLOY_DIR || exit 1
 done
 
-ncftpput -f $BUILDER_BASE/data/server.cfg $DEPLOY_DIR $CHANGELOG_NAME
+ncftpput -f $BUILDER_BASE/data/server.cfg $DEPLOY_DIR $CHANGELOG_NAME || exit 1
 
 # update .lastbuild only when finished successfully.
 date +"%Y-%m-%d %H:%M" >$BUILD_DIR/.lastbuild || exit 1
