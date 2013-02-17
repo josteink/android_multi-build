@@ -9,6 +9,8 @@ builds.
 
 - Near zero learning-curve.
 - Build system 100% external to source-trees being built.
+- Automatically generate changelogs for builds.
+- Intelligent build: Dont build when there are no changes since last build.
 - Automatic deployment of builds to hosting provider (FTP only for now).
 - Automatic (and optional) [Linaro](http://www.linaro.org/) toolchain support.
 - Ability to non-destructively inject Linaro toolchain seamlessly into
@@ -62,8 +64,6 @@ Changes should then be merged into your production config.
 Not making any promises, but these are things I might want to do in the
 future:
 
-- Automatically generate changelogs for builds.
-- A more intelligent build (dont build when there are no changes).
 - Automatically determine if a tree needs to be cleaned or not prior to build.
 - Better documentation, in code and elsewhere.
 - Extensibility (kernel variations, SSH/SCP upload).

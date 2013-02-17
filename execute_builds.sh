@@ -26,19 +26,38 @@ $BUILDER_BASE/deploy-linaro-toolchain.sh || exit 1
 
 BUILD_TYPES=$*
 
+# get changelog
+echo "Creating and checking changelog..."
+
+DATEVAR=`date +%Y%m%d`
+CHANGELOG_NAME="out/$DATEVAR-changes.txt"
+# we need "something" to upload.
+touch $CHANGELOG_NAME || exit 1
+
+# only get changelog when there are no .lastbuild
+if [ -e ".lastbuild" ] ; then
+    CHANGELOG_NAME="out/cm-10.1-$DATEVAR-changes.txt"
+    LASTBUILD=`cat .lastbuild`
+    repo forall -c git log --pretty=oneline --since="$LASTBUILD" >$CHANGELOG_NAME
+
+    # update .lastbuild
+    date +"%Y-%m-%d %H:%m" >.lastbuild
+    
+    # cat into wc to just get line-numbers, and no filename.
+    NUM_CHANGES=`cat $CHANGELOG_NAME | wc -l`
+    if [ "$NUM_CHANGES" == "0"] ; then
+        echo "No changes since last build. Aborting."
+        exit 0
+    fi
+fi
+
 echo "Executing build(s)."
-
-# TODO: get changelog as well
-#DATEVAR=`date +%Y%m%d`
-#CHANGELOG_NAME="out/cm-10.1-$DATEVAR-changes.txt"
-#LASTBUILD=`cat .lastbuild`
-#repo forall -c git log --since="$LASTBUILD" >$CHANGELOG_NAME
-
-# TODO: update .lastbuild in a format which git log --since understands...
 
 for BUILD_TYPE in $BUILD_TYPES
 do
-   echo "Building '$BUILD_TYPE' for $DEVICE from $BUILD_DIR."
-   echo "Results will be deployed to $DEPLOY_DIR."
-   $BUILDER_BASE/execute_build.sh $DEVICE $BUILD_TYPE $DEPLOY_DIR || exit 1
+    echo "Building '$BUILD_TYPE' for $DEVICE from $BUILD_DIR."
+    echo "Results will be deployed to $DEPLOY_DIR."
+    $BUILDER_BASE/execute_build.sh $DEVICE $BUILD_TYPE $DEPLOY_DIR || exit 1
 done
+
+ncftpput -f $BUILDER_BASE/data/server.cfg $DEPLOY_DIR $CHANGELOG_NAME
