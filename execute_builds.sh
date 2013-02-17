@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-echo "Preparing environment..."
-
 # script-folder, without trailing /
 BUILDER_BASE="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
@@ -11,20 +9,14 @@ DEPLOY_DIR=$3
 shift
 shift
 shift
+BUILD_TYPES=$*
+
+echo "Preparing environment for $DEVICE..."
 
 cd $BUILD_DIR || exit 1
 
 # sync before anything else
 repo sync -j16 || exit 1
-
-# re-create linaro envsetup, based on update envsetup from upstream repos.
-# we create a linaro-envsetup no matter what, but only use it for linaro builds
-$BUILDER_BASE/patch-envsetup.sh || exit 1
-
-# re-deploy linaro toolchain. just in case. it wont overwrite our existing tools.
-$BUILDER_BASE/deploy-linaro-toolchain.sh || exit 1
-
-BUILD_TYPES=$*
 
 # get changelog
 echo "Creating and checking changelog..."
@@ -36,20 +28,28 @@ touch $CHANGELOG_NAME || exit 1
 
 # only get changelog when there are no .lastbuild
 if [ -e ".lastbuild" ] ; then
-    CHANGELOG_NAME="out/cm-10.1-$DATEVAR-changes.txt"
-    LASTBUILD=`cat .lastbuild`
-    repo forall -c git log --pretty=oneline --since="$LASTBUILD" >$CHANGELOG_NAME
+    CHANGELOG_NAME="/tmp/cm-10.1-$DATEVAR-changes.txt"
+    LASTBUILD=`cat $BUILD_DIR/.lastbuild`
+    repo forall -c git log --pretty=oneline --since="$LASTBUILD" >$CHANGELOG_NAME || exit 1
 
     # update .lastbuild
-    date +"%Y-%m-%d %H:%m" >.lastbuild
+    date +"%Y-%m-%d %H:%M" >$BUILD_DIR/.lastbuild || exit 1
     
     # cat into wc to just get line-numbers, and no filename.
     NUM_CHANGES=`cat $CHANGELOG_NAME | wc -l`
-    if [ "$NUM_CHANGES" == "0"] ; then
+    echo "$NUM_CHANGES since last build ($LASTBUILD)."
+    if [ "$NUM_CHANGES" == "0" ] ; then
         echo "No changes since last build. Aborting."
         exit 0
     fi
 fi
+
+# re-create linaro envsetup, based on update envsetup from upstream repos.
+# we create a linaro-envsetup no matter what, but only use it for linaro builds
+$BUILDER_BASE/patch-envsetup.sh || exit 1
+
+# re-deploy linaro toolchain. just in case. it wont overwrite our existing tools.
+$BUILDER_BASE/deploy-linaro-toolchain.sh || exit 1
 
 echo "Executing build(s)."
 
