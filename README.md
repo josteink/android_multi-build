@@ -11,6 +11,7 @@ builds.
 - Build system 100% external to source-trees being built.
 - Automatically generate changelogs for builds.
 - Intelligent build: Dont build when there are no changes since last build.
+- Intelligent build: Automatically clean trees when needed.
 - Automatic deployment of builds to hosting provider (FTP only for now).
 - Automatic (and optional) [Linaro](http://www.linaro.org/) toolchain support.
 - Ability to non-destructively inject Linaro toolchain seamlessly into
@@ -26,8 +27,7 @@ builds.
 - Tree is a [CyanogenMod](https://github.com/CyanogenMod/) or similar AOSP-based
   tree which can be built with the normal Android build procedures.
 - One tree is used for one device only. While re-using the same tree for multiple
-  devices might work today, it will surely break a future implementation of
-  changelog-generation.
+  devices will produce good builds, the changelogs might include things they shouldn't.
 
 ## Usage
 
@@ -64,7 +64,6 @@ Changes should then be merged into your production config.
 Not making any promises, but these are things I might want to do in the
 future:
 
-- Automatically determine if a tree needs to be cleaned or not prior to build.
 - Better documentation, in code and elsewhere.
 - Extensibility (kernel variations, SSH/SCP upload).
 - Email reports.
