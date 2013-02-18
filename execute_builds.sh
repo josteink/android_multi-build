@@ -22,7 +22,7 @@ repo sync -j16 || exit 1
 echo "Creating and checking changelog..."
 
 DATEVAR=`date +%Y%m%d`
-CHANGELOG_NAME="/tmp/$changes-DATEVAR.txt"
+CHANGELOG_NAME="/tmp/changes-$DATEVAR.txt"
 # we need "something" to upload.
 touch $CHANGELOG_NAME || exit 1
 
