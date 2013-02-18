@@ -11,7 +11,6 @@ builds.
 - Build system 100% external to source-trees being built.
 - Automatically generate changelogs for builds.
 - Intelligent build: Dont build when there are no changes since last build.
-- Intelligent build: Automatically clean trees when needed.
 - Automatic deployment of builds to hosting provider (FTP only for now).
 - Automatic (and optional) [Linaro](http://www.linaro.org/) toolchain support.
 - Ability to non-destructively inject Linaro toolchain seamlessly into
