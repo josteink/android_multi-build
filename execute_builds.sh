@@ -33,7 +33,7 @@ if [ -e ".lastbuild" ] ; then
     
     # cat into wc to just get line-numbers, and no filename.
     NUM_CHANGES=`cat $CHANGELOG_NAME | wc -l`
-    echo "$NUM_CHANGES since last build ($LASTBUILD)."
+    echo "$NUM_CHANGES changes since last build ($LASTBUILD)."
     if [ "$NUM_CHANGES" == "0" ] ; then
         echo "No changes since last build. Aborting."
         exit 0
