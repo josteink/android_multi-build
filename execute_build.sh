@@ -11,10 +11,11 @@ DEPLOY_DIR=$3
 SUFFIX=""
 ENVSETUP="./build/envsetup.sh"
 
-LAST_BUILD_TYPE="`touch .lastbuildtype ; cat .lastbuildtype`"
-if [ "$LAST_BUILD_TYPE" != "$LAST_BUILD" ] ; then
+touch .lastbuildtype
+LAST_BUILD_TYPE="`cat .lastbuildtype`"
+if [ "$LAST_BUILD_TYPE" != "$BUILD_TYPE" ] ; then
     # clean up any previous bits, just in case.
-    echo "Different build type than previous buid. Cleaning."
+    echo "Different build type than previous build. Cleaning."
     make clean
 else
    echo "Same build-type as previous build. Dropping clean."

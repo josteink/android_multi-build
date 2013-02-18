@@ -22,14 +22,13 @@ repo sync -j16 || exit 1
 echo "Creating and checking changelog..."
 
 DATEVAR=`date +%Y%m%d`
-CHANGELOG_NAME="out/$DATEVAR-changes.txt"
+CHANGELOG_NAME="/tmp/$changes-DATEVAR.txt"
 # we need "something" to upload.
 touch $CHANGELOG_NAME || exit 1
 
 # only get changelog when there are no .lastbuild
 if [ -e ".lastbuild" ] ; then
-    CHANGELOG_NAME="/tmp/cm-10.1-$DATEVAR-changes.txt"
-    LASTBUILD=`cat $BUILD_DIR/.lastbuild`
+    LASTBUILD=`cat .lastbuild`
     repo forall -c git log --pretty=oneline --since="$LASTBUILD" >$CHANGELOG_NAME || exit 1
     
     # cat into wc to just get line-numbers, and no filename.
@@ -60,4 +59,4 @@ done
 ncftpput -f $BUILDER_BASE/data/server.cfg $DEPLOY_DIR $CHANGELOG_NAME || exit 1
 
 # update .lastbuild only when finished successfully.
-date +"%Y-%m-%d %H:%M" >$BUILD_DIR/.lastbuild || exit 1
+date +"%Y-%m-%d %H:%M" >.lastbuild || exit 1
