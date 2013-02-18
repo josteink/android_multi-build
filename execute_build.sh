@@ -11,12 +11,21 @@ DEPLOY_DIR=$3
 SUFFIX=""
 ENVSETUP="./build/envsetup.sh"
 
-# clean up any previous bits, just in case.
-make clean
+LAST_BUILD_TYPE="`touch .lastbuildtype ; cat .lastbuildtype`"
+if [ "$LAST_BUILD_TYPE" != "$LAST_BUILD" ] ; then
+    # clean up any previous bits, just in case.
+    echo "Different build type than previous buid. Cleaning."
+    make clean
+else
+   echo "Same build-type as previous build. Dropping clean."
+fi
 
 if [ "$BUILD_TYPE" == "linaro" ] ; then
     echo "Build-type: linaro."
     SUFFIX="-linaro"
+
+    # TODO: insert linaro-prep build-step here.
+
     ENVSETUP="./build/envsetup-linaro.sh"
 fi
 
@@ -27,6 +36,10 @@ breakfast $DEVICE
 
 export USE_CCACHE=1
 croot
+
+# all is good so far. register build-type
+echo $BUILD_TYPE >.lastbuildtype
+
 brunch $DEVICE || exit 1
 
 # ensure we are getting a build created NOW, and not some older build
@@ -43,6 +56,9 @@ if [ "$BUILD_TYPE" == "linaro" ] ; then
     mv "$LATEST_MD5" "$LATEST_LINARO_MD5" || exit 1
     LATEST=$LATEST_LINARO
     LATEST_MD5=$LATEST_LINARO_MD5
+
+    # TODO: insert linaro post-build steps here.
+    # Generalize implementation?
 fi
 
 echo Uploading files:
