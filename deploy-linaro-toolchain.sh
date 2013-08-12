@@ -9,7 +9,6 @@ mkdir -p $PREBUILT || exit 1
 
 # ensure we have toolchain
 SOURCE_URL="http://releases.linaro.org/13.05/components/android/toolchain/4.7/android-toolchain-eabi-4.7-2013.05-x86.tar.bz2"
-
 LINARO_ARCHIVE=$PREBUILT/`basename $SOURCE_URL`
 
 if [ ! -f "$LINARO_ARCHIVE" ] ; then
