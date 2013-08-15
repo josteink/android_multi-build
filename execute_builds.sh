@@ -11,7 +11,7 @@ shift
 shift
 BUILD_TYPES=$*
 
-echo "Preparing environment for $DEVICE..."
+echo "Preparing environment for $DEVICE and build-types $BUILD_TYPES ..."
 
 cd $BUILD_DIR || exit 1
 
@@ -42,10 +42,10 @@ fi
 
 # re-create linaro envsetup, based on update envsetup from upstream repos.
 # we create a linaro-envsetup no matter what, but only use it for linaro builds
-$BUILDER_BASE/patch-envsetup.sh || exit 1
+$BUILDER_BASE/patch-envsetup.sh || echo "Patching failed. IGNORING." # && exit 1
 
 # re-deploy linaro toolchain. just in case. it wont overwrite our existing tools.
-$BUILDER_BASE/deploy-linaro-toolchain.sh || exit 1
+$BUILDER_BASE/deploy-linaro-toolchain.sh || echo "Deploying failed." #&& exit 1
 
 echo "Executing build(s)."
 
